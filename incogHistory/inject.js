@@ -18,5 +18,7 @@ chrome.storage.sync.set(jsonUrl, function() {
 	console.log('Settings saved');
 });
 
-
+chrome.storage.sync.get(function(d){
+	console.log(d);
+});
 
