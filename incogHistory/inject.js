@@ -6,7 +6,17 @@ var href = window.location.href;
 	});
 },false);*/
 
-chrome.storage.sync.clear(function(){});
+//chrome.storage.sync.clear(function(){});
+
+var date = new Date();
+var time = date.getTime();
+
+var jsonUrl = {};
+jsonUrl[time] = href;
+
+chrome.storage.sync.set(jsonUrl, function() {
+	console.log('Settings saved');
+});
 
 
 
