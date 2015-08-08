@@ -12,13 +12,26 @@ var date = new Date();
 var time = date.getTime();
 
 var jsonUrl = {};
-jsonUrl[time] = href;
 
-chrome.storage.sync.set(jsonUrl, function() {
-	console.log('Settings saved');
-});
+isIncog();
 
-chrome.storage.sync.get(function(d){
-	console.log(d);
-});
-
+function isIncog(){
+	var fs = window.RequestFileSystem || window.webkitRequestFileSystem;
+	if (!fs) {
+	  console.log("check failed?");
+	} else {
+	  fs(window.TEMPORARY,
+		 100,
+		 console.log.bind(console, "not in incognito mode"),
+		 function(){
+			jsonUrl[time] = href;
+			console.log("incognito");
+			chrome.storage.sync.set(jsonUrl, function() {
+				console.log('Settings saved');
+			});
+			chrome.storage.sync.get(function(d){
+				console.log(d);
+			});
+		 });
+	}
+}
